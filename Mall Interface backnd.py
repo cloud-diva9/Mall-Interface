@@ -127,6 +127,7 @@ while True:
         else:
             print('Tha Table does\'nt exists, want to add the table into table? (y/n); ')
 
+
     elif ch == 5:
         tb = input('Enter the table name: ')
         if tb.lower() == 'stores':
@@ -190,9 +191,6 @@ while True:
                 c.execute(query)
                 mydb.commit()
                 print("Record deleted successfully!")
-
-                c.close()
-                mydb.close()
 
             else:
                 print("Invalid choice.")
