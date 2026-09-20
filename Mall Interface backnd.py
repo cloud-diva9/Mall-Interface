@@ -7,12 +7,14 @@ print('''Menu:
 3- To Create Table.
 4- To add values
 5- To see all the records
-6- To update them''')
+6- To update them
+7. To Break the loop''')
 while True:
     ch = int(input('Enther choice: '))
     if ch == 1:
-
+# To Create a new database
         db = input('Enter name of database: ')
+
         try:
             c.execute(f'Create database {db}')
         except:
@@ -20,6 +22,7 @@ while True:
 
         c.close()
         mydb.close()
+
 
     elif ch == 2:
         db = input('Enter name of database: ')
@@ -30,18 +33,19 @@ while True:
 
         c.close()
         mydb.close()
-            
 
+             
     elif ch == 3:
-
-        tabme = input('Enter new Table name: ')
+#To Create New Table
+        tabme = input('Enter new Table name         : ')
         n = int(input('How many columns do you want?: '))
 
         columns = []
         for i in range(n):
-            col_name = input(f'Enter name of column {i+1}: ')
+            col_name = input(f'Enter name of column {i+1}                                  : ')
             col_type = input(f'Enter datatype of {col_name} (INT, VARCHAR(50), FLOAT, etc.): ')
-            columns.append(f'{col_name} {col_type}')
+            col_con = input(f'Enter Constraint of {col_name}                               : ')
+            columns.append(f'{col_name} {col_type} {col_con}')
 
         query = (f'CREATE TABLE {tabme} ({', '.join(columns)})')
         c.execute(query)
@@ -52,17 +56,18 @@ while True:
 
 
     elif ch == 4: 
-        tb = input('Enter Table name to create: ')
+#TO Add Values
+        tb = input('Enter Table name to add values on: ')
 
         if tb.lower() == 'employees':
             while True:
-                emp_id = input('Enter Employee ID: ')
-                first_name = input('Enter First Name: ')
-                last_name = input('Enter Last Name: ')
-                role = input('Enter Role: ')
-                shift = input('Enter Shift: ')
+                emp_id = input('Enter Employee ID        : ')
+                first_name = input('Enter First Name     : ')
+                last_name = input('Enter Last Name       : ')
+                role = input('Enter Role                 : ')
+                shift = input('Enter Shift               : ')
                 contact = int(input('Enter Contact Number: '))
-                store_id = input('Enter Store ID: ')
+                store_id = input('Enter Store ID         : ')
 
                 query = f'''
                 INSERT INTO Employee
@@ -74,18 +79,20 @@ while True:
                 ch = input('Want to enter more data (y/n): ')
                 if ch.lower() == 'n':
                     break
+            c.close()
+            mydb.close()
 
         elif tb.lower() == 'stores':
             while True:
                 ##For store table
-                category = input('Enter Category: ')
-                floor = int(input('Enter Floor Level: '))
-                unit = int(input('Enter Unit Number: '))
+                category = input('Enter Category                        : ')
+                floor = int(input('Enter Floor Level                    : '))
+                unit = int(input('Enter Unit Number                     : '))
                 lease_start = input('Enter Lease Start Date (YYYY-MM-DD): ')
-                lease_end = input('Enter Lease End Date (YYYY-MM-DD): ')
-                rent = int(input('Enter Rent Amount: '))
-                contact_person = input('Enter Contact Person: ')
-                contact = int(input('Enter Contact Number: '))
+                lease_end = input('Enter Lease End Date (YYYY-MM-DD)    : ')
+                rent = int(input('Enter Rent Amount                     : '))
+                contact_person = input('Enter Contact Person            : ')
+                contact = int(input('Enter Contact Number               : '))
 
 
                 query = f''' INSERT INTO YourTableName(Category, Floor_lvl, Unit_nmbr, Lease_start, Lease_end, Rent_amt, Contact_person, Contact_nmbr) 
@@ -97,20 +104,23 @@ while True:
                 if cho.lower() == 'n':
                     break
 
+            c.close()
+            mydb.close()
+
         elif tb.lower() == 'behavior_analysis':
             while True:
                 customer_id = input('Enter Customer ID: ')
-                gender = input('Enter Gender: ')
-                age = int(input('Enter Age: '))
-                annual_income = int(input('Enter Annual Income (in k$): '))
-                spending_score = int(input('Enter Spending Score (1-100): '))
-                city = input('Enter City: ')
+                gender = input('Enter Gender                              : ')
+                age = int(input('Enter Age                                : '))
+                annual_income = int(input('Enter Annual Income            : '))
+                spending_score = int(input('Enter Spending Score (1-100)  : '))
+                city = input('Enter City                                  : ')
                 purchase_history = input('Enter Purchase History/Frequency: ')
-                payment_method = input('Enter Payment Method: ')
-                traffic_source = input('Enter Traffic Source: ')
-                cart_rate = float(input('Enter Cart Abandonment Rate (%): '))
-                loyalty = input('Enter Loyalty Program Status: ')
-                interests = input('Enter Interests/Hobbies: ')
+                payment_method = input('Enter Payment Method              : ')
+                traffic_source = input('Enter Traffic Source              : ')
+                cart_rate = float(input('Enter Cart Abandonment Rate (%)  : '))
+                loyalty = input('Enter Loyalty Program Status             : ')
+                interests = input('Enter Interests/Hobbies                : ')
 
                 query = f'''
                 INSERT INTO behavior_analysis VALUES
@@ -123,12 +133,17 @@ while True:
                 cho = input('Want to add more data (y/n)?: ')
                 if cho.lower() == 'n':
                     break
+            c.close()
+            mydb.close()
 
         else:
             print('Tha Table does\'nt exists!')
+            c.close()
+            mydb.close()
 
 
     elif ch == 5:
+# To Show all the table data
         tb = input('Enter the table name: ')
         if tb.lower() == 'stores':
             rec = c.execute('SELECT * FROM {tb}')
@@ -136,11 +151,17 @@ while True:
             for rec in c.fetchall():
                 print(rec)
 
+            c.close()
+            mydb.close()
+
         elif tb.lower() == 'employees':
             rec = c.execute('SELECT * FROM {tb}')
 
             for rec in c.fetchall():
                 print(rec)
+
+            c.close()
+            mydb.close()
 
 
         elif tb.lower() == 'behavior_analysis':
@@ -149,12 +170,15 @@ while True:
             for rec in c.fetchall():
                 print(rec)
 
+            c.close()
+            mydb.close()
+
 
     elif ch == 6:
-        tb = input('Enter table name to update/delete the data: ')
+        tb = input('Enter table name to update/delete the data        : ')
 
         if tb.lower() == 'behavior_analytics':
-            wh = input('Want to update or delete?: ')
+            wh = input('Want to update or delete?                     : ')
             if wh.lower() == 'update':
                 print('''What do you want to update?"
                 1. Gender
@@ -169,8 +193,8 @@ while True:
                 10. Loyalty Program Status
                 11. Interests/Hobbies''')
 
-                c_id = input("Enter CustomerID of the record to update: ")
                 field_ch = int(input("Enter your choice: "))
+                c_id = input("Enter CustomerID of the record to update: ")
                 fields = {1: "Gender", 2: "Age", 3: "Annual_Income", 4: "Spending_Score", 5: "City",\
                         6: "Purchase_History", 7: "Payment_Method", 8: "Traffic_Source", 9: "Cart_Abandonment_Rate",\
                         10: "Loyalty_Program_Status",11: "Interests_Hobbies"}
@@ -220,8 +244,8 @@ while True:
                 5. Contact_nmbr
                 6. Store_id''')
 
-                e_id = input("Enter Employee ID of the record to update: ")
                 field_ch = int(input("Enter your choice: "))
+                e_id = input("Enter Employee ID of the record to update: ")
                 fields = {1: 'First_nme', 2: 'Last_nme', 3: 'Role',  
                           4: 'Shift', 5: 'Contact_nmbr', 6: 'Store_id'}
 
@@ -290,7 +314,7 @@ while True:
 
             elif wh.lower() == 'delete':
                 u_no = input("Enter Unit Number of the record to delete: ")
-                query = f"DELETE FROM wmployees WHERE Employee ID = '{u_no_id}'"
+                query = f"DELETE FROM wmployees WHERE Employee ID = '{u_no}'"
                 c.execute(query)
                 print("Record deleted successfully!")
 
