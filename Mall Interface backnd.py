@@ -125,7 +125,7 @@ while True:
                     break
 
         else:
-            print('Tha Table does\'nt exists, want to add the table into table? (y/n); ')
+            print('Tha Table does\'nt exists!')
 
 
     elif ch == 5:
@@ -177,10 +177,24 @@ while True:
 
                 if field_ch in fields:
                     field = fields[field_ch]
-                    new_value = input("Enter the new value: ")
-                    query = f"UPDATE behavior_analysis SET {field} = {new_value}' WHERE CustomerID = '{c_id}'"
-                    c.execute(query)
-                    print("Record updated successfully!")
+                    if field in ['Age', 'Annual_Income', 'Spending_Score']:
+                        new_value = int(input("Enter the new value: "))
+                        query = f"UPDATE behavior_analysis SET {field} = {new_value}' WHERE CustomerID = '{c_id}'"
+                        c.execute(query)
+                        print("Record updated successfully!")
+
+                    elif field == 'Cart_Abandonment_Rate':
+                        new_value = float(input("Enter the new value: "))
+                        query = f"UPDATE behavior_analysis SET {field} = {new_value}' WHERE CustomerID = '{c_id}'"
+                        c.execute(query)
+                        print("Record updated successfully!")
+
+                    else:
+                        new_value = input("Enter the new value: ")
+                        query = f"UPDATE behavior_analysis SET {field} = {new_value}' WHERE CustomerID = '{c_id}'"
+                        c.execute(query)
+                        print("Record updated successfully!") 
+
 
                 else:
                     print("Invalid choice.")
@@ -189,9 +203,63 @@ while True:
                 customer_id = input("Enter CustomerID of the record to delete: ")
                 query = f"DELETE FROM behavior_analysis WHERE CustomerID = '{customer_id}'"
                 c.execute(query)
-                mydb.commit()
                 print("Record deleted successfully!")
 
             else:
                 print("Invalid choice.")
 
+
+        elif tb == 'employees':
+            wh = input('Want to update or delete?: ')
+            if wh.lower() == 'update':
+                print('''What do you want to update?"
+                1. Gender
+                2. Age
+                3. Annual Income
+                4. Spending Score
+                5. City
+                6. Purchase History
+                7. Payment Method
+                8. Traffic Source
+                9. Cart Abandonment Rate
+                10. Loyalty Program Status
+                11. Interests/Hobbies''')
+
+                c_id = input("Enter CustomerID of the record to update: ")
+                field_ch = int(input("Enter your choice: "))
+                fields = {1: "Gender", 2: "Age", 3: "Annual_Income", 4: "Spending_Score", 5: "City",\
+                        6: "Purchase_History", 7: "Payment_Method", 8: "Traffic_Source", 9: "Cart_Abandonment_Rate",\
+                        10: "Loyalty_Program_Status",11: "Interests_Hobbies"}
+
+                if field_ch in fields:
+                    field = fields[field_ch]
+                    if field in ['Age', 'Annual_Income', 'Spending_Score']:
+                        new_value = int(input("Enter the new value: "))
+                        query = f"UPDATE behavior_analysis SET {field} = {new_value}' WHERE CustomerID = '{c_id}'"
+                        c.execute(query)
+                        print("Record updated successfully!")
+
+                    elif field == 'Cart_Abandonment_Rate':
+                        new_value = float(input("Enter the new value: "))
+                        query = f"UPDATE behavior_analysis SET {field} = {new_value}' WHERE CustomerID = '{c_id}'"
+                        c.execute(query)
+                        print("Record updated successfully!")
+
+                    else:
+                        new_value = input("Enter the new value: ")
+                        query = f"UPDATE behavior_analysis SET {field} = {new_value}' WHERE CustomerID = '{c_id}'"
+                        c.execute(query)
+                        print("Record updated successfully!") 
+
+
+                else:
+                    print("Invalid choice.")
+
+            elif wh.lower() == 'delete':
+                customer_id = input("Enter CustomerID of the record to delete: ")
+                query = f"DELETE FROM behavior_analysis WHERE CustomerID = '{customer_id}'"
+                c.execute(query)
+                print("Record deleted successfully!")
+
+            else:
+                print("Invalid choice.")
